@@ -13,5 +13,7 @@ module.exports = {
   },
 
   // Create index.html
-  plugins: [new HtmlWebpackPlugin()]
+  plugins: [new HtmlWebpackPlugin()],
+
+  devtool: 'eval-source-map'
 };
