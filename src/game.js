@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-
+import { keyInputStream } from './keys'
 import GameAreaRenderer from './gameAreaRenderer'
 import GameRound from './gameRound'
 
@@ -11,21 +11,6 @@ const template = `
 </div>
 `
 
-const keydowns$ = Rx.Observable.fromEvent(window, 'keydown').share()
-const keyups$ = Rx.Observable.fromEvent(window, 'keyup').share()
-const keypresses$ = Rx.Observable.fromEvent(window, 'keypress').share()
-
-// Creates stream that ticks every 200ms while key is down
-const keyInputStream = (key, interval) => {
-  interval = interval || 200
-  const downs$ = keydowns$.filter(evt => evt.key === key)
-  const ups$ = keyups$.filter(evt => evt.key === key)
-
-  return downs$.throttle(_ => ups$).mergeMap(_ =>
-    Rx.Observable.interval(interval).takeUntil(ups$).startWith(1)
-  ).map(_ => key)
-}
-
 class Game {
   constructor(container) {
     this.container = container
@@ -36,19 +21,6 @@ class Game {
     // Draw UI
     this.container.innerHTML = template
     this.gameCanvas = this.container.querySelector('canvas.game-canvas')
-    this.startNewButton = this.container.querySelector('button.start-new-button')
-
-    this.initGameCanvas()
-    keyInputStream('ArrowLeft').subscribe(() => this.round.moveLeft())
-    keyInputStream('ArrowRight').subscribe(() => this.round.moveRight())
-    keyInputStream('ArrowDown', 50).subscribe(() => this.round.moveDown())
-    keyInputStream('ArrowUp').subscribe(() => this.round.rotate())
-    keyInputStream(' ').subscribe(() => this.round.dropDown())
-    keyInputStream('Enter').subscribe(() => this.startNewRound())
-    Rx.Observable.interval(300).subscribe(() => this.round.moveDown())
-  }
-
-  initGameCanvas() {
     this.gameCanvas.width = this.cols * this.blockSize
     this.gameCanvas.height = this.rows * this.blockSize
     this.gameAreaRenderer = new GameAreaRenderer(this.gameCanvas, this.blockSize)
@@ -56,7 +28,18 @@ class Game {
 
   start() {
     this.startNewRound()
+    this.bindInputListeners()
     window.requestAnimationFrame(this.render.bind(this))
+  }
+
+  bindInputListeners() {
+    keyInputStream('ArrowLeft', 100).subscribe(() => this.round.moveLeft())
+    keyInputStream('ArrowRight', 100).subscribe(() => this.round.moveRight())
+    keyInputStream('ArrowDown', 50).subscribe(() => this.round.moveDown())
+    keyInputStream('ArrowUp', 200).subscribe(() => this.round.rotate())
+    keyInputStream(' ', 200).subscribe(() => this.round.dropDown())
+    keyInputStream('Enter', 200).subscribe(() => this.startNewRound())
+    Rx.Observable.interval(300).subscribe(() => this.round.moveDown())
   }
 
   startNewRound() {
