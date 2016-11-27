@@ -12,12 +12,14 @@ class GameAreaRenderer {
 
   render(gameRound) {
     this.clearCanvas()
-    this.renderBlocks(gameRound)
-    this.renderCurrentBrick(gameRound)
-    this.renderGameOver(gameRound)
+    this.renderBlocks(gameRound.area)
+    this.renderBrick(gameRound.currentBrick, gameRound.currentBrickPosition)
+    if(gameRound.gameOver) {
+      this.renderGameOver()
+    }
   }
 
-  renderBlocks({area}) {
+  renderBlocks(area) {
     let x, y
     for(y in area) {
       for(x in area[y]) {
@@ -29,11 +31,11 @@ class GameAreaRenderer {
     }
   }
 
-  renderCurrentBrick({currentBrick, currentBrickPosition}) {
-    if(currentBrick) {
-      currentBrick.points.forEach(point => {
-        const position = currentBrickPosition.add(point)
-        this.renderBlock(position, currentBrick.color)
+  renderBrick(brick, brickPosition) {
+    if(brick) {
+      brick.points.forEach(point => {
+        const position = brickPosition.add(point)
+        this.renderBlock(position, brick.color)
       })
     }
   }
@@ -43,15 +45,13 @@ class GameAreaRenderer {
     this.ctx.fillRect(position.x * this.blockSize + 1, position.y * this.blockSize + 1, this.blockSize - 2, this.blockSize - 2)
   }
 
-  renderGameOver({gameOver}) {
-    if(gameOver) {
-      this.ctx.font = "32px serif";
-      this.ctx.textAlign = 'center'
-      this.ctx.fillStyle = 'white'
-      this.ctx.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height / 2)
-      this.ctx.font = "18px serif";
-      this.ctx.fillText("PRESS ENTER FOR NEW GAME", this.canvas.width / 2, this.canvas.height / 2 + 50)
-    }
+  renderGameOver() {
+    this.ctx.font = "32px serif";
+    this.ctx.textAlign = 'center'
+    this.ctx.fillStyle = 'white'
+    this.ctx.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height / 2)
+    this.ctx.font = "18px serif";
+    this.ctx.fillText("PRESS ENTER FOR NEW GAME", this.canvas.width / 2, this.canvas.height / 2 + 50)
   }
 }
 

@@ -3,13 +3,7 @@ import { keyInputStream } from './keys'
 import GameAreaRenderer from './gameAreaRenderer'
 import GameRound from './gameRound'
 
-const template = `
-<div style="display: flex; flex-direction: row;">
-<div style="flex: 1"></div>
-<div><canvas class="game-canvas"></canvas></div>
-<div style="flex: 1"></div>
-</div>
-`
+const template = require('./template.html')
 
 class Game {
   constructor(container) {
@@ -17,19 +11,22 @@ class Game {
     this.cols = 10
     this.rows = 20
     this.blockSize = 30
+  }
 
-    // Draw UI
+  start() {
+    this.drawUi()
+    this.startNewRound()
+    this.bindInputListeners()
+    this.startGravity()
+    window.requestAnimationFrame(this.render.bind(this))
+  }
+
+  drawUi() {
     this.container.innerHTML = template
     this.gameCanvas = this.container.querySelector('canvas.game-canvas')
     this.gameCanvas.width = this.cols * this.blockSize
     this.gameCanvas.height = this.rows * this.blockSize
     this.gameAreaRenderer = new GameAreaRenderer(this.gameCanvas, this.blockSize)
-  }
-
-  start() {
-    this.startNewRound()
-    this.bindInputListeners()
-    window.requestAnimationFrame(this.render.bind(this))
   }
 
   bindInputListeners() {
@@ -39,6 +36,9 @@ class Game {
     keyInputStream('ArrowUp', 200).subscribe(() => this.round.rotate())
     keyInputStream(' ', 200).subscribe(() => this.round.dropDown())
     keyInputStream('Enter', 200).subscribe(() => this.startNewRound())
+  }
+
+  startGravity() {
     Rx.Observable.interval(300).subscribe(() => this.round.moveDown())
   }
 
