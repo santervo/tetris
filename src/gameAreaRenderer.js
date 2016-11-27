@@ -40,7 +40,7 @@ class GameAreaRenderer {
 
   renderBlock(position, color) {
     this.ctx.fillStyle = color
-    this.ctx.fillRect(position.x * this.blockSize, position.y * this.blockSize, this.blockSize, this.blockSize)
+    this.ctx.fillRect(position.x * this.blockSize + 1, position.y * this.blockSize + 1, this.blockSize - 2, this.blockSize - 2)
   }
 
   renderGameOver({gameOver}) {
