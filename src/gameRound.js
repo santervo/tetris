@@ -1,13 +1,12 @@
-import { bricks } from './data'
+import { randomBrick } from './brick'
 import { makePoint, addPoints } from './point'
-import { randomItem } from './utils'
 
 export default class GameRound {
   constructor({cols, rows}) {
     this.cols = cols
     this.rows = rows
     this.area = Array.from(Array(rows), () => Array.from(Array(cols), _ => null)),
-    this.nextBrick = randomItem(bricks)
+    this.nextBrick = randomBrick()
     this.currentBrick = null
     this.currentBrickPosition = null
     this.showNextBrick()
@@ -65,7 +64,7 @@ export default class GameRound {
     if(this.canMoveBrickToPosition(this.nextBrick, startPosition)) {
       this.currentBrick = this.nextBrick
       this.currentBrickPosition = startPosition
-      this.nextBrick = randomItem(bricks)
+      this.nextBrick = randomBrick()
     }
     else {
       this.gameOver = true

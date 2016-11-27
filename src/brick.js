@@ -1,4 +1,5 @@
 import { makePoint } from './point'
+
 const bricks = [
   // 0XX
   // XX0
@@ -58,5 +59,6 @@ const bricks = [
   },
 
 ]
+const randomBrick = () => bricks[Math.floor(Math.random()*bricks.length)]
 
-export { bricks }
+export { randomBrick }

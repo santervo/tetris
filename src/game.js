@@ -1,7 +1,6 @@
 import Rx from 'rxjs/Rx'
 
 import { makePoint, addPoints } from './point'
-import { randomItem } from './utils'
 import GameAreaRenderer from './gameAreaRenderer'
 import GameRound from './gameRound'
 
