@@ -1,5 +1,5 @@
 import { randomBrick } from './brick'
-import { makePoint, addPoints } from './point'
+import Point from './point'
 
 export default class GameRound {
   constructor({cols, rows}) {
@@ -14,7 +14,7 @@ export default class GameRound {
 
   moveLeft() {
     if(this.gameOver) return
-    const newPosition = { x: this.currentBrickPosition.x - 1, y: this.currentBrickPosition.y  }
+    const newPosition = new Point(this.currentBrickPosition.x - 1, this.currentBrickPosition.y)
     if(this.canMoveBrickToPosition(this.currentBrick, newPosition)) {
       this.currentBrickPosition = newPosition
     }
@@ -22,7 +22,7 @@ export default class GameRound {
 
   moveRight() {
     if(this.gameOver) return
-    const newPosition = { x: this.currentBrickPosition.x + 1, y: this.currentBrickPosition.y  }
+    const newPosition = new Point(this.currentBrickPosition.x + 1, this.currentBrickPosition.y)
     if(this.canMoveBrickToPosition(this.currentBrick, newPosition)) {
       this.currentBrickPosition = newPosition
     }
@@ -30,7 +30,7 @@ export default class GameRound {
 
   moveDown() {
     if(this.gameOver) return
-    const newPosition = { x: this.currentBrickPosition.x, y: this.currentBrickPosition.y + 1 }
+    const newPosition = new Point(this.currentBrickPosition.x, this.currentBrickPosition.y + 1)
     if(this.canMoveBrickToPosition(this.currentBrick, newPosition)) {
       this.currentBrickPosition = newPosition
       return true
@@ -60,7 +60,7 @@ export default class GameRound {
   }
 
   showNextBrick() {
-    const startPosition = makePoint(Math.floor(this.cols / 2) - Math.floor(this.nextBrick.size / 2), 0)
+    const startPosition = new Point(Math.floor(this.cols / 2) - Math.floor(this.nextBrick.size / 2), 0)
     if(this.canMoveBrickToPosition(this.nextBrick, startPosition)) {
       this.currentBrick = this.nextBrick
       this.currentBrickPosition = startPosition
@@ -74,7 +74,7 @@ export default class GameRound {
   detachCurrentBrick() {
     if(this.currentBrick) {
       this.currentBrick.points.forEach(point => {
-        const position = addPoints(this.currentBrickPosition, point)
+        const position = this.currentBrickPosition.add(point)
         this.area[position.y][position.x] = this.currentBrick.color
       })
       this.currentBrick = null
@@ -98,7 +98,7 @@ export default class GameRound {
   }
 
   canMoveBlockToPosition(point, position) {
-    var newPosition = addPoints(position, point)
+    var newPosition = position.add(point)
     return this.inArea(newPosition) && this.isPositionEmpty(newPosition)
   }
 

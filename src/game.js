@@ -1,6 +1,5 @@
 import Rx from 'rxjs/Rx'
 
-import { makePoint, addPoints } from './point'
 import GameAreaRenderer from './gameAreaRenderer'
 import GameRound from './gameRound'
 

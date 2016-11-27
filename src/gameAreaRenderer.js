@@ -1,5 +1,3 @@
-import { addPoints } from './point'
-
 class GameAreaRenderer {
   constructor(canvas, blockSize) {
     this.canvas = canvas
@@ -34,7 +32,7 @@ class GameAreaRenderer {
   renderCurrentBrick({currentBrick, currentBrickPosition}) {
     if(currentBrick) {
       currentBrick.points.forEach(point => {
-        const position = addPoints(currentBrickPosition, point)
+        const position = currentBrickPosition.add(point)
         this.renderBlock(position, currentBrick.color)
       })
     }

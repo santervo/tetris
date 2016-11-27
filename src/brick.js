@@ -1,4 +1,4 @@
-import { makePoint } from './point'
+import Point from './point'
 
 const bricks = [
   // 0XX
@@ -7,7 +7,7 @@ const bricks = [
   {
     color: 'lime',
     size: 3,
-    points: [makePoint(1,0), makePoint(2,0), makePoint(0,1), makePoint(1,1)]
+    points: [new Point(1,0), new Point(2,0), new Point(0,1), new Point(1,1)]
   },
   // XX0
   // 0XX
@@ -15,14 +15,14 @@ const bricks = [
   {
     color: 'red',
     size: 3,
-    points: [makePoint(0,0), makePoint(1,0), makePoint(1,1), makePoint(2,1)]
+    points: [new Point(0,0), new Point(1,0), new Point(1,1), new Point(2,1)]
   },
   // XX
   // XX
   {
     color: 'yellow',
     size: 2,
-    points: [makePoint(0,0), makePoint(1,0), makePoint(0,1), makePoint(1,1)]
+    points: [new Point(0,0), new Point(1,0), new Point(0,1), new Point(1,1)]
   },
   // 0X00
   // 0X00
@@ -31,7 +31,7 @@ const bricks = [
   {
     color: 'cyan',
     size: 4,
-    points: [makePoint(1,0), makePoint(1,1), makePoint(1,2), makePoint(1,3)]
+    points: [new Point(1,0), new Point(1,1), new Point(1,2), new Point(1,3)]
   },
   // XXX
   // 0X0
@@ -39,7 +39,7 @@ const bricks = [
   {
     color: 'purple',
     size: 3,
-    points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(1,1)]
+    points: [new Point(0,0), new Point(1,0), new Point(2,0), new Point(1,1)]
   },
   // XXX
   // X00
@@ -47,7 +47,7 @@ const bricks = [
   {
     color: 'orange',
     size: 3,
-    points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(0,1)]
+    points: [new Point(0,0), new Point(1,0), new Point(2,0), new Point(0,1)]
   },
   // XXX
   // 00X
@@ -55,7 +55,7 @@ const bricks = [
   {
     color: 'blue',
     size: 3,
-    points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(2,1)]
+    points: [new Point(0,0), new Point(1,0), new Point(2,0), new Point(2,1)]
   },
 
 ]
