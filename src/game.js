@@ -1,16 +1,15 @@
 import Rx from 'rxjs/Rx'
 import { emitPeriodicallyOnKeydown, emitOnceOnKeydown } from './keys'
-import GameAreaRenderer from './gameAreaRenderer'
+import GameView from './gameView'
+import NextBrickView from './nextBrickView'
 import GameRound from './gameRound'
+import config from './config'
 
 const template = require('./template.html')
 
 class Game {
   constructor(container) {
     this.container = container
-    this.cols = 10
-    this.rows = 20
-    this.blockSize = 30
   }
 
   start() {
@@ -23,14 +22,8 @@ class Game {
 
   drawUi() {
     this.container.innerHTML = template
-    this.gameCanvas = this.container.querySelector('canvas.game-canvas')
-    this.gameCanvas.width = this.cols * this.blockSize
-    this.gameCanvas.height = this.rows * this.blockSize
-
-    this.nextBrickCanvas = this.container.querySelector('canvas.next-brick-canvas')
-    this.nextBrickCanvas.width = this.nextBrickCanvas.height = 4 * this.blockSize
-
-    this.gameAreaRenderer = new GameAreaRenderer(this.gameCanvas, this.blockSize)
+    this.gameView = new GameView(this.container.querySelector('canvas.game-canvas'))
+    this.nextBrickView = new NextBrickView(this.container.querySelector('canvas.next-brick-canvas'))
   }
 
   bindInputListeners() {
@@ -47,11 +40,12 @@ class Game {
   }
 
   startNewRound() {
-    this.round = new GameRound({ cols: this.cols, rows: this.rows })
+    this.round = new GameRound(config)
   }
 
   render() {
-    this.gameAreaRenderer.render(this.round)
+    this.gameView.render(this.round)
+    this.nextBrickView.render(this.round.nextBrick)
     window.requestAnimationFrame(this.render.bind(this))
   }
 }
