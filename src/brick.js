@@ -1,6 +1,16 @@
 import Point from './point'
 
-const bricks = [
+export default class Brick {
+  constructor({color, size, points}) {
+    this.color = color
+    this.size = size
+    this.points = points
+  }
+}
+
+Brick.randomBrick = () => new Brick(Brick.configs[Math.floor(Math.random()*Brick.configs.length)])
+
+Brick.configs = [
   // 0XX
   // XX0
   // 000
@@ -56,9 +66,5 @@ const bricks = [
     color: 'blue',
     size: 3,
     points: [new Point(0,0), new Point(1,0), new Point(2,0), new Point(2,1)]
-  },
-
+  }
 ]
-const randomBrick = () => bricks[Math.floor(Math.random()*bricks.length)]
-
-export { randomBrick }

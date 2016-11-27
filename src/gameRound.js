@@ -1,4 +1,4 @@
-import { randomBrick } from './brick'
+import Brick from './brick'
 import Point from './point'
 
 export default class GameRound {
@@ -6,7 +6,7 @@ export default class GameRound {
     this.cols = cols
     this.rows = rows
     this.area = Array.from(Array(rows), () => Array.from(Array(cols), _ => null)),
-    this.nextBrick = randomBrick()
+    this.nextBrick = Brick.randomBrick()
     this.currentBrick = null
     this.currentBrickPosition = null
     this.showNextBrick()
@@ -50,9 +50,7 @@ export default class GameRound {
 
   rotate() {
     if(this.currentBrick) {
-      const newPoints = this.currentBrick.points.map(point => (
-        { x: point.y, y: this.currentBrick.size - 1 - point.x }
-      ))
+      const newPoints = this.currentBrick.points.map(point => new Point(point.y, this.currentBrick.size - 1 - point.x))
       if(newPoints.every(point => this.canMoveBlockToPosition(point, this.currentBrickPosition))) {
         this.currentBrick.points = newPoints
       }
@@ -64,7 +62,7 @@ export default class GameRound {
     if(this.canMoveBrickToPosition(this.nextBrick, startPosition)) {
       this.currentBrick = this.nextBrick
       this.currentBrickPosition = startPosition
-      this.nextBrick = randomBrick()
+      this.nextBrick = Brick.randomBrick()
     }
     else {
       this.gameOver = true

@@ -13,7 +13,9 @@ class GameAreaRenderer {
   render(gameRound) {
     this.clearCanvas()
     this.renderBlocks(gameRound.area)
-    this.renderBrick(gameRound.currentBrick, gameRound.currentBrickPosition)
+    if(gameRound.currentBrick) {
+      this.renderBrick(gameRound.currentBrick, gameRound.currentBrickPosition)
+    }
     if(gameRound.gameOver) {
       this.renderGameOver()
     }
@@ -32,12 +34,10 @@ class GameAreaRenderer {
   }
 
   renderBrick(brick, brickPosition) {
-    if(brick) {
-      brick.points.forEach(point => {
-        const position = brickPosition.add(point)
-        this.renderBlock(position, brick.color)
-      })
-    }
+    brick.points.forEach(point => {
+      const position = brickPosition.add(point)
+      this.renderBlock(position, brick.color)
+    })
   }
 
   renderBlock(position, color) {

@@ -26,6 +26,10 @@ class Game {
     this.gameCanvas = this.container.querySelector('canvas.game-canvas')
     this.gameCanvas.width = this.cols * this.blockSize
     this.gameCanvas.height = this.rows * this.blockSize
+
+    this.nextBrickCanvas = this.container.querySelector('canvas.next-brick-canvas')
+    this.nextBrickCanvas.width = this.nextBrickCanvas.height = 4 * this.blockSize
+
     this.gameAreaRenderer = new GameAreaRenderer(this.gameCanvas, this.blockSize)
   }
 
