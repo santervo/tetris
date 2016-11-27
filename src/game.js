@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-import { keyInputStream } from './keys'
+import { emitPeriodicallyOnKeydown, emitOnceOnKeydown } from './keys'
 import GameAreaRenderer from './gameAreaRenderer'
 import GameRound from './gameRound'
 
@@ -30,12 +30,12 @@ class Game {
   }
 
   bindInputListeners() {
-    keyInputStream('ArrowLeft', 100).subscribe(() => this.round.moveLeft())
-    keyInputStream('ArrowRight', 100).subscribe(() => this.round.moveRight())
-    keyInputStream('ArrowDown', 50).subscribe(() => this.round.moveDown())
-    keyInputStream('ArrowUp', 200).subscribe(() => this.round.rotate())
-    keyInputStream(' ', 200).subscribe(() => this.round.dropDown())
-    keyInputStream('Enter', 200).subscribe(() => this.startNewRound())
+    emitPeriodicallyOnKeydown('ArrowLeft', 50, 200).subscribe(() => this.round.moveLeft())
+    emitPeriodicallyOnKeydown('ArrowRight', 50, 200).subscribe(() => this.round.moveRight())
+    emitPeriodicallyOnKeydown('ArrowDown', 50).subscribe(() => this.round.moveDown())
+    emitPeriodicallyOnKeydown('ArrowUp', 200).subscribe(() => this.round.rotate())
+    emitOnceOnKeydown(' ').subscribe(() => this.round.dropDown())
+    emitOnceOnKeydown('Enter').subscribe(() => this.startNewRound())
   }
 
   startGravity() {
