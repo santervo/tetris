@@ -33,7 +33,7 @@ class GameAreaRenderer {
 
   renderCurrentBrick({currentBrick, currentBrickPosition}) {
     if(currentBrick) {
-      currentBrick.shape.points.forEach(point => {
+      currentBrick.points.forEach(point => {
         const position = addPoints(currentBrickPosition, point)
         this.renderBlock(position, currentBrick.color)
       })

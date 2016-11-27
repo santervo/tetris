@@ -1,9 +1,10 @@
 import { makePoint } from './point'
-const shapes = [
+const bricks = [
   // 0XX
   // XX0
   // 000
   {
+    color: 'lime',
     size: 3,
     points: [makePoint(1,0), makePoint(2,0), makePoint(0,1), makePoint(1,1)]
   },
@@ -11,12 +12,14 @@ const shapes = [
   // 0XX
   // 000
   {
+    color: 'red',
     size: 3,
     points: [makePoint(0,0), makePoint(1,0), makePoint(1,1), makePoint(2,1)]
   },
   // XX
   // XX
   {
+    color: 'yellow',
     size: 2,
     points: [makePoint(0,0), makePoint(1,0), makePoint(0,1), makePoint(1,1)]
   },
@@ -25,6 +28,7 @@ const shapes = [
   // 0X00
   // 0X00
   {
+    color: 'cyan',
     size: 4,
     points: [makePoint(1,0), makePoint(1,1), makePoint(1,2), makePoint(1,3)]
   },
@@ -32,6 +36,7 @@ const shapes = [
   // 0X0
   // 000
   {
+    color: 'purple',
     size: 3,
     points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(1,1)]
   },
@@ -39,6 +44,7 @@ const shapes = [
   // X00
   // 000
   {
+    color: 'orange',
     size: 3,
     points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(0,1)]
   },
@@ -46,19 +52,11 @@ const shapes = [
   // 00X
   // 000
   {
+    color: 'blue',
     size: 3,
     points: [makePoint(0,0), makePoint(1,0), makePoint(2,0), makePoint(2,1)]
   },
 
 ]
 
-const colors = [
-  'red',
-  'green',
-  'blue',
-  'yellow',
-  'cyan',
-  'magenta'
-]
-
-export { shapes, colors }
+export { bricks }

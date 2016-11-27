@@ -1,20 +1,13 @@
-import { shapes, colors } from './data'
+import { bricks } from './data'
 import { makePoint, addPoints } from './point'
 import { randomItem } from './utils'
-
-const makeBrick = () => (
-  {
-    color: randomItem(colors),
-    shape: randomItem(shapes)
-  }
-)
 
 export default class GameRound {
   constructor({cols, rows}) {
     this.cols = cols
     this.rows = rows
     this.area = Array.from(Array(rows), () => Array.from(Array(cols), _ => null)),
-    this.nextBrick = makeBrick()
+    this.nextBrick = randomItem(bricks)
     this.currentBrick = null
     this.currentBrickPosition = null
     this.showNextBrick()
@@ -58,21 +51,21 @@ export default class GameRound {
 
   rotate() {
     if(this.currentBrick) {
-      const newPoints = this.currentBrick.shape.points.map(point => (
-        { x: point.y, y: this.currentBrick.shape.size - 1 - point.x }
+      const newPoints = this.currentBrick.points.map(point => (
+        { x: point.y, y: this.currentBrick.size - 1 - point.x }
       ))
       if(newPoints.every(point => this.canMoveBlockToPosition(point, this.currentBrickPosition))) {
-        this.currentBrick.shape.points = newPoints
+        this.currentBrick.points = newPoints
       }
     }
   }
 
   showNextBrick() {
-    const startPosition = makePoint(Math.floor(this.cols / 2) - Math.floor(this.nextBrick.shape.size / 2), 0)
+    const startPosition = makePoint(Math.floor(this.cols / 2) - Math.floor(this.nextBrick.size / 2), 0)
     if(this.canMoveBrickToPosition(this.nextBrick, startPosition)) {
       this.currentBrick = this.nextBrick
       this.currentBrickPosition = startPosition
-      this.nextBrick = makeBrick()
+      this.nextBrick = randomItem(bricks)
     }
     else {
       this.gameOver = true
@@ -81,7 +74,7 @@ export default class GameRound {
 
   detachCurrentBrick() {
     if(this.currentBrick) {
-      this.currentBrick.shape.points.forEach(point => {
+      this.currentBrick.points.forEach(point => {
         const position = addPoints(this.currentBrickPosition, point)
         this.area[position.y][position.x] = this.currentBrick.color
       })
@@ -102,7 +95,7 @@ export default class GameRound {
   }
 
   canMoveBrickToPosition(brick, position) {
-    return brick.shape.points.every(point => this.canMoveBlockToPosition(point, position))
+    return brick.points.every(point => this.canMoveBlockToPosition(point, position))
   }
 
   canMoveBlockToPosition(point, position) {
