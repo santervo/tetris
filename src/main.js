@@ -1,4 +1,5 @@
-const main = document.createElement('div')
-main.innerHTML = "Hello World"
 
-document.body.appendChild(main)
+import { Game } from './game'
+
+const game = new Game(document.body)
+game.start()
