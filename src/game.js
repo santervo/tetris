@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-import { emitPeriodicallyOnKeydown, emitOnceOnKeydown } from './keys'
+import { emitPeriodicallyOnKeydown, emitOnceOnKeydown, KeyCodes } from './keys'
 import GameView from './gameView'
 import NextBrickView from './nextBrickView'
 import GameRound from './gameRound'
@@ -27,12 +27,12 @@ class Game {
   }
 
   bindInputListeners() {
-    emitPeriodicallyOnKeydown('ArrowLeft', 50, 200).subscribe(() => this.round.moveLeft())
-    emitPeriodicallyOnKeydown('ArrowRight', 50, 200).subscribe(() => this.round.moveRight())
-    emitPeriodicallyOnKeydown('ArrowDown', 50).subscribe(() => this.round.moveDown())
-    emitPeriodicallyOnKeydown('ArrowUp', 200).subscribe(() => this.round.rotate())
-    emitOnceOnKeydown(' ').subscribe(() => this.round.dropDown())
-    emitOnceOnKeydown('Enter').subscribe(() => this.startNewRound())
+    emitPeriodicallyOnKeydown(KeyCodes.ARROW_LEFT, 50, 200).subscribe(() => this.round.moveLeft())
+    emitPeriodicallyOnKeydown(KeyCodes.ARROW_RIGHT, 50, 200).subscribe(() => this.round.moveRight())
+    emitPeriodicallyOnKeydown(KeyCodes.ARROW_DOWN, 50).subscribe(() => this.round.moveDown())
+    emitPeriodicallyOnKeydown(KeyCodes.ARROW_UP, 200).subscribe(() => this.round.rotate())
+    emitOnceOnKeydown(KeyCodes.SPACE).subscribe(() => this.round.dropDown())
+    emitOnceOnKeydown(KeyCodes.ENTER).subscribe(() => this.startNewRound())
   }
 
   startGravity() {
